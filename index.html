@@ -99,6 +99,25 @@ const json = {
             "Geometric",
             "A mix of both"
           ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "question4",
+          "title": "Would you like to receive email updates about the cultural district?",
+          "isRequired": true,
+          "choices": [
+            "Yes, sign me up!",
+            "No"
+          ]
+        },
+        {
+          "type": "text",
+          "name": "question5",
+          "visibleIf": "{question4} = 'Yes, sign me up!'",
+          "title": "Email Address",
+          "isRequired": true,
+          "inputType": "email",
+          "autocomplete": "email"
         }
       ]
     }
