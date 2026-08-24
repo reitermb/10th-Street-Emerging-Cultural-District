@@ -16,47 +16,88 @@
 
   <div id="surveyContainer"></div>
 
-  <h2>Test</h2>
 
   <script>
-    const json = {
-      "title": "Cultural District Survey",
-      "pages": [
+const json = {
+  "title": "Cultural District Survey",
+  "pages": [
+    {
+      "name": "page1",
+      "elements": [
         {
-          "name": "page1",
-          "elements": [
+          "type": "html",
+          "name": "Context 1",
+          "html": "<h3>Background</h3>\n<p>If you haven't already, please take a few minutes to familiarize yourself with the <a href=\"https://drive.google.com/file/d/1Y0QconJkCDNwSi_2QMKtvzgCAZPKTRmX/view?usp=sharing\" target=\"_blank\">input that community members have shared in previous town halls</a>.</p>\n<p>The results of this survey will be used to guide artists in creating some logo and brand options customized to our district—which will then be put to a final community vote.</p>\n<p><a href=\"https://reitermb.github.io/10th-Street-Emerging-Cultural-District/transit-history.html\" target=\"_blank\">Read more about the area's transit history</a></p>\n<p><a href=\"https://reitermb.github.io/10th-Street-Emerging-Cultural-District/diversity.html\" target=\"_blank\">Read more about the area's diversity</a></p>\n<p><a href=\"https://reitermb.github.io/10th-Street-Emerging-Cultural-District/emerson-theater.html\" target=\"_blank\">Read more about the Emerson Theater</a></p>"
+        },
+        {
+          "type": "ranking",
+          "name": "question1",
+          "title": "Rank the following themes for our cultural district from favorite to least favorite",
+          "description": "You may rank as many or as few of the options as you'd like.",
+          "isRequired": true,
+          "choices": [
+            "Transit History",
+            "Diverse & Multicultural",
             {
-              "type": "ranking",
-              "name": "question1",
-              "title": "Rank the following themes for our cultural district from favorite to least favorite",
-              "description": "You may rank as many or as few of the options as you'd like.",
-              "choices": [
-                { "value": "Transit History", "text": "Transit History" },
-                { "value": "Diverse & Multicultural", "text": "Diverse & Multicultural" },
-                { "value": "item3", "text": "Hardworking & Gritty" },
-                { "value": "item4", "text": "Emerson Theater" }
-              ],
-              "choicesOrder": "random",
-              "selectToRankEnabled": true
+              "value": "item3",
+              "text": "Hardworking & Gritty"
             },
             {
-              "type": "ranking",
-              "name": "question2",
-              "title": "Rank the following names for our district from favorite to least favorite",
-              "description": "You may rank as many or as few of the options as you'd like.",
-              "choices": [
-                { "value": "item1", "text": "Eastland" },
-                { "value": "item2", "text": "Linwood" },
-                { "value": "item3", "text": "The Dime" },
-                { "value": "item4", "text": "Emerson" }
-              ],
-              "choicesOrder": "random",
-              "selectToRankEnabled": true
+              "value": "item4",
+              "text": "Emerson Theater"
             }
+          ],
+          "choicesOrder": "random",
+          "maxSelectedChoices": 4,
+          "selectToRankEnabled": true
+        },
+        {
+          "type": "ranking",
+          "name": "question2",
+          "title": "Rank possible names for our district from your favorite to least favorite",
+          "description": "You may rank as many or as few of the options as you'd like.",
+          "isRequired": true,
+          "choices": [
+            "Eastland",
+            "Linwood",
+            "The Dime",
+            "Emerson"
+          ],
+          "choicesOrder": "random",
+          "maxSelectedChoices": 4,
+          "selectToRankEnabled": true
+        },
+        {
+          "type": "html",
+          "name": "Style Narrative",
+          "html": "<h3>Style examples for Art in the right-of-way:</h3>\n<p>These will be painted via stencil alongside installation of the tactical urbanism components of our project aimed at both reinforcing the brand of the cultural district and calming traffic to improve safety and increase productive sharing of streets between vehicles, pedestrians, and bikes.</p>\n<ul>\n<li>Floral</li>\n<li>Geometric</li>\n</ul>"
+        },
+        {
+          "type": "image",
+          "name": "Floral Examples",
+          "imageLink": "https://i.imgur.com/2qaZ1Ou.png"
+        },
+        {
+          "type": "image",
+          "name": "Geometric Examples",
+          "imageLink": "https://i.imgur.com/yTy7I06.png"
+        },
+      {
+          "type": "radiogroup",
+          "name": "question3",
+          "title": "Which style of right-of-way art would you prefer to see?",
+          "isRequired": true,
+          "choices": [
+            "Floral",
+            "Geometric",
+            "A mix of both"
           ]
         }
       ]
-    };
+    }
+  ],
+  "headerView": "advanced"
+};
 
     const survey = new Survey.Model(json);
     $("#surveyContainer").Survey({ model: survey });
