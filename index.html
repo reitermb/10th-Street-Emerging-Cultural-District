@@ -19,23 +19,29 @@
 .sd-title {text-align: left !important;}
 
 /* Allow dragging from anywhere on the card */
+/* Container adjustments */
+.sd-ranking {
+  touch-action: pan-y !important; /* Allows vertical scrolling between cards */
+}
+
+/* Base item styling */
 .sd-ranking-item,
 .sv-ranking-item {
-  touch-action: manipulation !important;
-  cursor: grab !important;
-  user-select: none;  /* Prevents text selection highlight during touch hold */
+  cursor: pointer !important;
+  user-select: none;
   -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none !important; /* Immediately claims touch when finger lands on card */
 }
 
-/* Ensure child text and decorators don't block the drag hit area */
+/* Ensure text and inner elements allow click bubbling */
 .sd-ranking-item__text,
 .sv-ranking-item__text,
-.sd-ranking-item__index,
-.sv-ranking-item__index {
-  pointer-events: none;
+.sd-ranking-item__drag-handle {
+  pointer-events: auto !important;
 }
 
-/* Enlarge touch targets on small screens */
+/* Ghost / Drop placeholder & sizing on mobile */
 @media (max-width: 768px) {
   .sd-ranking-item,
   .sv-ranking-item,
@@ -49,7 +55,7 @@
     margin-bottom: 8px !important;
     font-size: 16px !important;
     box-sizing: border-box !important;
-    min-height: 52px !important; /* Matches the expanded item height */
+    min-height: 52px !important;
   }
 }
 </style>
@@ -191,6 +197,26 @@ if (Survey.settings) {
     .catch(error => {
         console.error("Error submitting survey data:", error);
     });
+});
+
+survey.onAfterRenderQuestion.add(function(survey, options) {
+  if (options.question.getType() === "ranking") {
+    const questionNode = options.htmlElement;
+    
+    // Tap anywhere on an unranked item to immediately promote it to ranked list
+    $(questionNode).on("click touchend", ".sd-ranking-item", function(e) {
+      // Avoid firing tap if user was dragging
+      if ($(this).hasClass("sd-ranking-item--dragged")) return;
+      
+      const itemValue = $(this).attr("data-sv-drop-target-item-value") || $(this).text().trim();
+      const currentVal = options.question.value || [];
+      
+      // If tapping an item in the unranked section, push it to ranked values
+      if (!currentVal.includes(itemValue)) {
+        options.question.value = [...currentVal, itemValue];
+      }
+    });
+  }
 });
 
     $("#surveyContainer").Survey({ model: survey });
