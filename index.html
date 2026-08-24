@@ -17,6 +17,33 @@
   display: block;
 }; */
 .sd-title {text-align: left !important;}
+
+/* Allow dragging from anywhere on the card */
+.sd-ranking-item,
+.sv-ranking-item {
+  touch-action: none; /* Prevents mobile scroll intercept while dragging */
+  cursor: grab !important;
+  user-select: none;  /* Prevents text selection highlight during touch hold */
+  -webkit-user-select: none;
+}
+
+/* Ensure child text and decorators don't block the drag hit area */
+.sd-ranking-item__text,
+.sv-ranking-item__text,
+.sd-ranking-item__index,
+.sv-ranking-item__index {
+  pointer-events: none;
+}
+
+/* Enlarge touch targets on small screens */
+@media (max-width: 768px) {
+  .sd-ranking-item,
+  .sv-ranking-item {
+    padding: 14px 16px !important;
+    margin-bottom: 8px !important;
+    font-size: 16px !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -56,7 +83,9 @@ const json = {
           ],
           "choicesOrder": "random",
           "maxSelectedChoices": 4,
-          "selectToRankEnabled": true
+          "selectToRankEnabled": true,
+          "selectToRankAreasLayout": "vertical"
+
         },
         {
           "type": "ranking",
@@ -72,7 +101,9 @@ const json = {
           ],
           "choicesOrder": "random",
           "maxSelectedChoices": 4,
-          "selectToRankEnabled": true
+          "selectToRankEnabled": true,
+          "selectToRankAreasLayout": "vertical"
+
         },
         {
           "type": "html",
