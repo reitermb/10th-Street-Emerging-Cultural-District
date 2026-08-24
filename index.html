@@ -106,10 +106,9 @@ const json = {
   
 };
 
-// Import or load your SurveyJS model JSON
-const survey = new Survey.Model(json);
+    const survey = new Survey.Model(json);
 
-survey.onComplete.add(function (sender, options) {
+    survey.onComplete.add(function (sender, options) {
     // sender.data contains all the user responses as an object
     var surveyResults = sender.data;
 
@@ -129,6 +128,10 @@ survey.onComplete.add(function (sender, options) {
         console.error("Error submitting survey data:", error);
     });
 });
+
+    $("#surveyContainer").Survey({ model: survey });
+
+
   </script>
 
 </body>
