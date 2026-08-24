@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cultural District Survey</title>
+
+  <!-- SurveyJS CSS (v1.9.130) -->
+  <link href="https://unpkg.com/survey-jquery@1.9.130/defaultV2.min.css" type="text/css" rel="stylesheet" />
+
+  <!-- jQuery & SurveyJS Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/survey-jquery@1.9.130/survey.jquery.min.js"></script>
+</head>
+<body>
+
+  <div id="surveyContainer"></div>
+
+  <h2>Test</h2>
+
+  <script>
+    const json = {
+      "title": "Cultural District Survey",
+      "pages": [
+        {
+          "name": "page1",
+          "elements": [
+            {
+              "type": "ranking",
+              "name": "question1",
+              "title": "Rank the following themes for our cultural district from favorite to least favorite",
+              "description": "You may rank as many or as few of the options as you'd like.",
+              "choices": [
+                { "value": "Transit History", "text": "Transit History" },
+                { "value": "Diverse & Multicultural", "text": "Diverse & Multicultural" },
+                { "value": "item3", "text": "Hardworking & Gritty" },
+                { "value": "item4", "text": "Emerson Theater" }
+              ],
+              "choicesOrder": "random",
+              "selectToRankEnabled": true
+            },
+            {
+              "type": "ranking",
+              "name": "question2",
+              "title": "Rank the following names for our district from favorite to least favorite",
+              "description": "You may rank as many or as few of the options as you'd like.",
+              "choices": [
+                { "value": "item1", "text": "Eastland" },
+                { "value": "item2", "text": "Linwood" },
+                { "value": "item3", "text": "The Dime" },
+                { "value": "item4", "text": "Emerson" }
+              ],
+              "choicesOrder": "random",
+              "selectToRankEnabled": true
+            }
+          ]
+        }
+      ]
+    };
+
+    const survey = new Survey.Model(json);
+    $("#surveyContainer").Survey({ model: survey });
+  </script>
+</body>
+</html>
