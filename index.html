@@ -18,30 +18,40 @@
 }; */
 .sd-title {text-align: left !important;}
 
-/* Allow dragging from anywhere on the card */
-/* Container adjustments */
-.sd-ranking {
-  touch-action: pan-y !important; /* Allows vertical scrolling between cards */
-}
-
-/* Base item styling */
+/* 1. Make the item a relative container */
 .sd-ranking-item,
 .sv-ranking-item {
-  cursor: pointer !important;
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: none !important; /* Immediately claims touch when finger lands on card */
+  position: relative !important;
+  cursor: grab !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  margin-bottom: 8px !important;
 }
 
-/* Ensure text and inner elements allow click bubbling */
+/* 2. Stretch the drag handle over the entire card */
+.sd-ranking-item__drag-handle,
+.sv-ranking-item__drag-handle {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0 !important; /* Hides the handle icon while keeping the hit area */
+  z-index: 2 !important;
+  cursor: grab !important;
+  touch-action: none !important;
+}
+
+/* 3. Let card text and numbers show through underneath the hit area */
+.sd-ranking-item__content,
 .sd-ranking-item__text,
-.sv-ranking-item__text,
-.sd-ranking-item__drag-handle {
-  pointer-events: auto !important;
+.sd-ranking-item__index {
+  position: relative;
+  z-index: 1;
+  pointer-events: none !important;
 }
 
-/* Ghost / Drop placeholder & sizing on mobile */
+/* 4. Mobile sizing & matching drop-placeholder dimensions */
 @media (max-width: 768px) {
   .sd-ranking-item,
   .sv-ranking-item,
@@ -52,10 +62,9 @@
   .sd-drag-drop-ghost,
   .sv-drag-drop-ghost {
     padding: 14px 16px !important;
-    margin-bottom: 8px !important;
     font-size: 16px !important;
+    min-height: 54px !important;
     box-sizing: border-box !important;
-    min-height: 52px !important;
   }
 }
 </style>
@@ -170,12 +179,11 @@ const json = {
   
 };
 
-if (Survey.settings) {
-  // Try 1.9.x drag settings if available
-  if (Survey.settings.dragAndDrop) {
-    Survey.settings.dragAndDrop.longTapDuration = 0;
-  }
-}
+// if (Survey.settings) {
+//   if (Survey.settings.dragAndDrop) {
+//     Survey.settings.dragAndDrop.longTapDuration = 0;
+//   }
+// }
     const survey = new Survey.Model(json);
 
     survey.onComplete.add(function (sender, options) {
@@ -199,25 +207,7 @@ if (Survey.settings) {
     });
 });
 
-survey.onAfterRenderQuestion.add(function(survey, options) {
-  if (options.question.getType() === "ranking") {
-    const questionNode = options.htmlElement;
-    
-    // Tap anywhere on an unranked item to immediately promote it to ranked list
-    $(questionNode).on("click touchend", ".sd-ranking-item", function(e) {
-      // Avoid firing tap if user was dragging
-      if ($(this).hasClass("sd-ranking-item--dragged")) return;
-      
-      const itemValue = $(this).attr("data-sv-drop-target-item-value") || $(this).text().trim();
-      const currentVal = options.question.value || [];
-      
-      // If tapping an item in the unranked section, push it to ranked values
-      if (!currentVal.includes(itemValue)) {
-        options.question.value = [...currentVal, itemValue];
-      }
-    });
-  }
-});
+
 
     $("#surveyContainer").Survey({ model: survey });
 
