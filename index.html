@@ -156,6 +156,12 @@ const json = {
   
 };
 
+if (Survey.settings) {
+  // Try 1.9.x drag settings if available
+  if (Survey.settings.dragAndDrop) {
+    Survey.settings.dragAndDrop.longTapDuration = 50;
+  }
+}
     const survey = new Survey.Model(json);
 
     survey.onComplete.add(function (sender, options) {
