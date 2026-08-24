@@ -11,6 +11,11 @@
   <!-- jQuery & SurveyJS Script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://unpkg.com/survey-jquery@1.9.130/survey.jquery.min.js"></script>
+  <style>/* Centers the main survey header title */
+.sd-title, .sd-header__title, .sv-title {
+  text-align: center !important;
+  display: block;
+}</style>
 </head>
 <body>
 
@@ -96,7 +101,7 @@ const json = {
       ]
     }
   ],
-  "headerView": "advanced"
+  
 };
 
     const survey = new Survey.Model(json);
