@@ -12,10 +12,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://unpkg.com/survey-jquery@1.9.130/survey.jquery.min.js"></script>
   <style>/* Centers the main survey header title */
-.sd-title, .sd-header__title, .sv-title {
+/* .sd-title, .sd-header__title, .sv-title {
   text-align: center !important;
   display: block;
-}</style>
+}; */
+.sd-title {text-align: left !important;}
+</style>
 </head>
 <body>
 
@@ -104,8 +106,30 @@ const json = {
   
 };
 
-    const survey = new Survey.Model(json);
-    $("#surveyContainer").Survey({ model: survey });
+// Import or load your SurveyJS model JSON
+const survey = new Survey.Model(json);
+
+survey.onComplete.add(function (sender, options) {
+    // sender.data contains all the user responses as an object
+    var surveyResults = sender.data;
+
+    // Send data to your Google Apps Script Web App URL
+    fetch("https://script.google.com/macros/s/AKfycbzr-nhwnrPAhu2uj0PL_vNT9ZlewObzZdIXe2cC6J1IoJxJTCdb-PloXLK-NVhYvDCO3w/exec", {
+        method: "POST",
+        mode: "no-cors", // Required for Google Apps Script cross-origin requests
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(surveyResults)
+    })
+    .then(response => {
+        console.log("Survey response successfully sent to Google Sheet!");
+    })
+    .catch(error => {
+        console.error("Error submitting survey data:", error);
+    });
+});
   </script>
+
 </body>
 </html>
