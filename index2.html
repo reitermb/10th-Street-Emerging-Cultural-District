@@ -178,6 +178,32 @@
       color: #9c1c1c;
       border: 1px solid #f8b4b4;
     }
+    /* Automatically number items once the list has been ranked */
+.sortable-list.has-ranked {
+  counter-reset: rank-counter;
+}
+
+.sortable-list.has-ranked .sortable-item {
+  counter-increment: rank-counter;
+}
+
+/* Rank number badge that appears before each item */
+.sortable-list.has-ranked .sortable-item::before {
+  content: counter(rank-counter);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2px;
+  width: 24px;
+  height: 24px;
+  background-color: #005ea2;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 800;
+  border-radius: 50%;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
   </style>
 </head>
 <body>
@@ -222,7 +248,7 @@
 
       <!-- Narrative & Images -->
       <div class="question-block">
-        <h3>Style examples for Art in the right-of-way:</h3>
+        <h3>Style examples for art in the right-of-way:</h3>
         <p>These will be painted via stencil alongside installation of the tactical urbanism components of our project aimed at both reinforcing the brand of the cultural district and calming traffic to improve safety and increase productive sharing of streets between vehicles, pedestrians, and bikes.</p>
         <img class="survey-img" src="https://i.imgur.com/2qaZ1Ou.png" alt="Floral Examples" />
         <img class="survey-img" src="https://i.imgur.com/yTy7I06.png" alt="Geometric Examples" />
@@ -276,17 +302,22 @@
     shuffleList('rankNames');
 
     // 2. Initialize SortableJS instances (instant touch response, no delay)
-    const sortableConfig = {
-      animation: 150,
-      delay: 0,                   // Instant drag pickup on touch
-      delayOnTouchOnly: false,
-      touchStartThreshold: 2,     // Ignores micro-trembles, immediately claims drag
-      ghostClass: 'sortable-ghost',
-      chosenClass: 'sortable-chosen'
-    };
+// Add onEnd callback to sortableConfig
+const sortableConfig = {
+  animation: 150,
+  delay: 0,
+  delayOnTouchOnly: false,
+  touchStartThreshold: 2,
+  ghostClass: 'sortable-ghost',
+  chosenClass: 'sortable-chosen',
+  onEnd: function (evt) {
+    // Adds class to show rank numbers once user drags an item
+    evt.to.classList.add('has-ranked');
+  }
+};
 
-    const rankThemesSortable = Sortable.create(document.getElementById('rankThemes'), sortableConfig);
-    const rankNamesSortable = Sortable.create(document.getElementById('rankNames'), sortableConfig);
+const rankThemesSortable = Sortable.create(document.getElementById('rankThemes'), sortableConfig);
+const rankNamesSortable = Sortable.create(document.getElementById('rankNames'), sortableConfig);
 
     // 3. Conditional Visibility: Question 5 (Email)
     const emailBlock = document.getElementById('emailBlock');
