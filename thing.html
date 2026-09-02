@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - USWDS Mockup</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uswds/3.8.1/css/uswds.min.css" />
+  <style>
+    body {
+      background-color: #f0f0f0;
+    }
+    .app-container {
+      min-height: 100vh;
+      display: flex;
+    }
+    .sidebar {
+      width: 250px;
+      background: #ffffff;
+      border-right: 1px solid #dfe1e2;
+      flex-shrink: 0;
+      padding: 1.5rem 1rem;
+    }
+    .main-content {
+      flex-grow: 1;
+      padding: 2rem;
+      max-width: 1440px;
+    }
+    .dashboard-card {
+      background: #ffffff;
+      border: 1px solid #dfe1e2;
+      height: 100%;
+    }
+    .card-top-accent {
+      border-top: 4px solid #005ea2;
+    }
+    .card-top-error {
+      border-top: 4px solid #d54309;
+    }
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .status-row:last-child {
+      border-bottom: none;
+    }
+    /* Avatar badge circles */
+    .avatar-stack {
+      display: inline-flex;
+      align-items: center;
+    }
+    .avatar-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #71767a;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+      border: 2px solid #ffffff;
+      margin-left: -6px;
+    }
+    .avatar-circle:first-child {
+      margin-left: 0;
+    }
+    .avatar-purple { background-color: #5c4687; }
+    .avatar-teal { background-color: #007580; }
+    .avatar-gold { background-color: #d83933; }
+
+    /* Timeline Styling */
+    .timeline-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .timeline-item {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #dfe1e2;
+    }
+    .timeline-item:last-child {
+      border-bottom: none;
+    }
+    .sub-tree {
+      border-left: 2px dashed #a9aeb1;
+      margin-left: 0.75rem;
+      padding-left: 0.75rem;
+      margin-top: 0.25rem;
+    }
+    .unread-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #005ea2;
+      margin-right: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <aside class="sidebar">
+      <div class="margin-bottom-3">
+        <form class="usa-search usa-search--small" role="search">
+          <label class="usa-sr-only" for="sidebar-search">Search</label>
+          <input class="usa-input" id="sidebar-search" type="search" name="search" placeholder="Search">
+          <button class="usa-button" type="submit">
+            <span class="usa-sr-only">Search</span>
+          </button>
+        </form>
+      </div>
+
+      <div class="text-bold text-base-darker font-sans-3xs text-uppercase margin-bottom-1">Admin Access</div>
+      <nav aria-label="Admin Navigation">
+        <ul class="usa-sidenav margin-bottom-3">
+          <li class="usa-sidenav__item"><a href="#" class="usa-current">Home</a></li>
+          <li class="usa-sidenav__item">
+            <a href="#">Users</a>
+            <ul class="usa-sidenav__sublist">
+              <li class="usa-sidenav__item"><a href="#">Requests &amp; Authorization</a></li>
+              <li class="usa-sidenav__item"><a href="#">Feedback</a></li>
+              <li class="usa-sidenav__item"><a href="#">Log Entries</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="text-bold text-base-darker font-sans-3xs text-uppercase margin-bottom-1">Data Team Access</div>
+      <nav aria-label="Data Team Navigation">
+        <ul class="usa-sidenav font-sans-2xs">
+          <li class="usa-sidenav__item"><a href="#">Data Dashboard</a></li>
+          <li class="usa-sidenav__item"><a href="#">Data Files</a></li>
+          <li class="usa-sidenav__item"><a href="#">ETL</a></li>
+          <li class="usa-sidenav__item"><a href="#">Feature Flags</a></li>
+          <li class="usa-sidenav__item"><a href="#">Search Indexes</a></li>
+          <li class="usa-sidenav__item"><a href="#">Security</a></li>
+          <li class="usa-sidenav__item"><a href="#">Parsers</a></li>
+          <li class="usa-sidenav__item"><a href="#">Periodic Tasks</a></li>
+          <li class="usa-sidenav__item"><a href="#">Reports</a></li>
+          <li class="usa-sidenav__item"><a href="#">STTs</a></li>
+          <li class="usa-sidenav__item"><a href="#">Appearance</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      
+      <div class="grid-row flex-align-center flex-justify margin-bottom-3">
+        <div class="grid-col-8">
+          <h1 class="margin-0 font-heading-xl text-ink">Good afternoon, Alex</h1>
+          <p class="font-sans-md text-base-dark margin-top-05 margin-bottom-0">Here are your most recent updates</p>
+        </div>
+        <div class="grid-col-4">
+          <form class="usa-search" role="search">
+            <label class="usa-sr-only" for="header-search">Search</label>
+            <input class="usa-input" id="header-search" type="search" name="search" placeholder="Search">
+            <button class="usa-button" type="submit">
+              <span class="usa-sr-only">Search</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <section class="grid-row grid-gap margin-bottom-3">
+        <div class="tablet:grid-col-4">
+          <div class="usa-card dashboard-card card-top-error shadow-1 radius-md">
+            <div class="usa-card__container padding-2">
+              <div class="flex-justify flex-align-center display-flex margin-bottom-1">
+                <h2 class="font-sans-2xs text-bold text-uppercase text-base-dark margin-0">🛡️ ClamAV File Scans</h2>
+                <button class="usa-button usa-button--unstyled text-base font-sans-xs">•••</button>
+              </div>
+              <p class="font-sans-3xs text-base margin-0">Updated a few seconds ago</p>
+              <div class="usa-alert usa-alert--error usa-alert--no-icon padding-1 margin-y-1">
+                <div class="usa-alert__body">
+                  <p class="usa-alert__text font-sans-xs text-bold text-center">6 failed scans</p>
+                </div>
+              </div>
+              <p class="font-sans-3xs text-base-dark margin-0">Scan complete: 94 of 100 files passed.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tablet:grid-col-4">
+          <div class="usa-card dashboard-card card-top-error shadow-1 radius-md">
+            <div class="usa-card__container padding-2">
+              <div class="flex-justify flex-align-center display-flex margin-bottom-1">
+                <h2 class="font-sans-2xs text-bold text-uppercase text-base-dark margin-0">🛡️ OWASP ZAP Scans</h2>
+                <button class="usa-button usa-button--unstyled text-base font-sans-xs">•••</button>
+              </div>
+              <p class="font-sans-3xs text-base margin-bottom-1">Scanned July 1, 2026 at 12:19 AM</p>
+              <div class="status-row">
+                <span class="font-sans-xs">Frontend</span>
+                <span class="usa-tag bg-error-dark text-white font-sans-3xs">Failed</span>
+              </div>
+              <div class="status-row">
+                <span class="font-sans-xs">Backend</span>
+                <span class="usa-tag bg-error-dark text-white font-sans-3xs">Failed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tablet:grid-col-4">
+          <div class="usa-card dashboard-card card-top-accent shadow-1 radius-md">
+            <div class="usa-card__container padding-2">
+              <div class="flex-justify flex-align-center display-flex margin-bottom-1">
+                <h2 class="font-sans-2xs text-bold text-uppercase text-base-dark margin-0">📁 Data Files</h2>
+                <button class="usa-button usa-button--unstyled text-base font-sans-xs">•••</button>
+              </div>
+              <p class="font-sans-3xs text-base margin-bottom-1">Updated a few seconds ago</p>
+              <p class="font-sans-xs text-base-darker margin-0">
+                Within the past 48 hours, <span class="text-bold text-error">100 files were not processed</span> across all program types, 3 FYs, 2 Qs and all 4 Sections.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="grid-row grid-gap margin-bottom-3">
+        
+        <div class="tablet:grid-col-5">
+          <div class="usa-card dashboard-card shadow-1 radius-md">
+            <div class="usa-card__container padding-205">
+              
+              <div class="flex-justify flex-align-center display-flex margin-bottom-105">
+                <h2 class="font-sans-sm text-bold margin-0">📄 12 New Log Entries</h2>
+                <div>
+                  <button class="usa-button usa-button--unstyled font-sans-3xs text-base-dark margin-right-1">Sort: Newest</button>
+                  <button class="usa-button usa-button--unstyled text-base font-sans-xs">•••</button>
+                </div>
+              </div>
+
+              <div class="usa-alert usa-alert--info usa-alert--no-icon padding-105 margin-bottom-2 bg-primary-lightest radius-sm">
+                <div class="usa-alert__body">
+                  <div class="font-sans-2xs text-bold text-primary-dark">⚙️ Nightly Task Summary</div>
+                  <div class="font-sans-3xs text-base margin-bottom-05">Last run: Today at 4:00 AM ET</div>
+                  <p class="usa-alert__text font-sans-3xs text-ink margin-0">
+                    <strong class="text-primary-dark">Successfully completed</strong> all nightly database tasks, including the data backup and cleanup of outdated records.
+                  </p>
+                </div>
+              </div>
+
+              <ul class="timeline-list font-sans-2xs">
+                <li class="timeline-item">
+                  <div class="text-bold">System datafile version cleanup successful</div>
+                  <div class="text-base-dark font-sans-3xs flex-justify display-flex margin-top-05">
+                    <span>Change · Admin log entry</span>
+                    <span>Today at 4:01 AM</span>
+                  </div>
+                </li>
+
+                <li class="timeline-item">
+                  <div class="text-bold">System starting datafile version cleanup</div>
+                  <div class="text-base font-sans-3xs margin-top-05">Deletion of all old versions of files.</div>
+                  <div class="text-base-dark font-sans-3xs flex-justify display-flex margin-top-05">
+                    <span>Change · Admin log entry</span>
+                    <span>Today at 4:01 AM</span>
+                  </div>
+                </li>
+
+                <li class="timeline-item">
+                  <div class="text-bold text-success-dark">✔ System finished database backup</div>
+                  <div class="text-base-dark font-sans-3xs flex-justify display-flex margin-top-05">
+                    <span>Change · Admin log entry</span>
+                    <span>Today at 4:01 AM</span>
+                  </div>
+                  <div class="sub-tree font-sans-3xs text-base-darker">
+                    <div>Executed database backup S3 upload</div>
+                    <div>Executed database backup</div>
+                  </div>
+                </li>
+
+                <li class="timeline-item">
+                  <div class="text-bold text-primary">↪ System starting database backup</div>
+                  <div class="text-base-dark font-sans-3xs flex-justify display-flex margin-top-05">
+                    <span>Addition · Admin log entry</span>
+                    <span>Today at 4:00 AM</span>
+                  </div>
+                </li>
+
+                <li class="timeline-item">
+                  <div class="text-bold">System datafile version cleanup successful</div>
+                  <div class="text-base-dark font-sans-3xs flex-justify display-flex margin-top-05">
+                    <span>Change · Admin log entry</span>
+                    <span>Today at 4:00 AM</span>
+                  </div>
+                </li>
+
+                <li class="timeline-item">
+                  <div class="text-bold">System starting datafile version cleanup</div>
+                  <div class="text-base font-sans-3xs margin-top-05">Deletion of all old versions of files.</div>
+                  <div class="text-base-dark font-sans-3xs flex-justify display-flex margin-top-05">
+                    <span>Change · Admin log entry</span>
+                    <span>Today at 4:00 AM</span>
+                  </div>
+                </li>
+
+                <li class="timeline-item">
+                  <div class="text-bold">System starting datafile version cleanup</div>
+                  <div class="text-base font-sans-3xs margin-top-05">Deletion of all old versions of files.</div>
+                  <div class="text-base-dark font-sans-3xs flex-justify display-flex margin-top-05">
+                    <span>Change · Admin log entry</span>
+                    <span>Today at 4:00 AM</span>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="flex-justify flex-align-center display-flex margin-top-2">
+                <span class="font-sans-3xs text-italic text-base">and 5 more entries</span>
+                <a href="#" class="usa-link font-sans-3xs text-bold">View all entries</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="tablet:grid-col-7">
+          
+          <div class="grid-row grid-gap margin-bottom-3">
+            
+            <div class="tablet:grid-col-6">
+              <div class="usa-card dashboard-card shadow-1 radius-md">
+                <div class="usa-card__container padding-2">
+                  <div class="flex-justify flex-align-center display-flex margin-bottom-05">
+                    <h2 class="font-sans-xs text-bold margin-0">📊 System Status</h2>
+                    <button class="usa-button usa-button--unstyled text-base font-sans-xs">•••</button>
+                  </div>
+                  <p class="font-sans-3xs text-base margin-bottom-1">Updated a few seconds ago</p>
+                  
+                  <div class="status-row">
+                    <span class="font-sans-2xs">Frontend</span>
+                    <span class="usa-tag bg-primary-light text-primary-darker font-sans-3xs">Online</span>
+                  </div>
+                  <div class="status-row">
+                    <span class="font-sans-2xs">Backend</span>
+                    <span class="usa-tag bg-primary-light text-primary-darker font-sans-3xs">Online</span>
+                  </div>
+                  <div class="status-row">
+                    <span class="font-sans-2xs">Go Parser</span>
+                    <span class="usa-tag bg-primary-light text-primary-darker font-sans-3xs">Online</span>
+                  </div>
+                  <div class="status-row">
+                    <span class="font-sans-2xs">Prometheus</span>
+                    <span class="usa-tag bg-primary-light text-primary-darker font-sans-3xs">Online</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tablet:grid-col-6">
+              <div class="usa-card dashboard-card shadow-1 radius-md">
+                <div class="usa-card__container padding-2">
+                  <div class="flex-justify flex-align-center display-flex margin-bottom-05">
+                    <h2 class="font-sans-xs text-bold margin-0">📄 Reparse Meta Model</h2>
+                    <button class="usa-button usa-button--unstyled text-base font-sans-xs">•••</button>
+                  </div>
+                  <p class="font-sans-3xs text-base margin-bottom-2">Last created on February 25, 2026 at 7:17 PM</p>
+                  <p class="font-sans-2xs text-base-darker margin-0">
+                    Last reparse timeout took less than a minute and <strong>finished</strong> and was <strong>successful</strong>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="usa-card dashboard-card shadow-1 radius-md">
+            <div class="usa-card__container padding-205">
+              
+              <div class="flex-justify flex-align-center display-flex margin-bottom-1">
+                <div class="display-flex flex-align-center">
+                  <h2 class="font-sans-sm text-bold margin-0 margin-right-1">💬 6 New Feedback Submissions</h2>
+                  <div class="avatar-stack">
+                    <span class="avatar-circle avatar-purple">M</span>
+                    <span class="avatar-circle avatar-teal">A</span>
+                  </div>
+                </div>
+                <div>
+                  <button class="usa-button usa-button--unstyled font-sans-3xs text-base-dark margin-right-1">Sort: Unread</button>
+                  <button class="usa-button usa-button--unstyled text-base font-sans-xs">•••</button>
+                </div>
+              </div>
+
+              <div class="margin-bottom-105 font-sans-3xs text-bold">
+                <span class="text-success-dark">1 Very Satisfied</span>
+                <span class="avatar-stack margin-x-05">
+                  <span class="avatar-circle avatar-purple" style="width:16px; height:16px; font-size:8px;">M</span>
+                  <span class="avatar-circle avatar-teal" style="width:16px; height:16px; font-size:8px;">A</span>
+                </span>
+                <span class="text-base-dark margin-right-1">· Neutral</span>
+                <span class="text-error">· 2 Very Unsatisfied</span>
+              </div>
+
+              <div class="timeline-list">
+                
+                <div class="timeline-item">
+                  <div class="flex-justify flex-align-center display-flex margin-bottom-05">
+                    <span class="font-sans-3xs text-base">Yesterday at 4:05PM ET</span>
+                    <span class="usa-tag bg-success-light text-success-dark font-sans-3xs text-bold">😊 Very Satisfied</span>
+                  </div>
+                  <div class="font-sans-2xs text-bold margin-bottom-05">Anonymous Submission</div>
+                  <p class="font-sans-3xs text-base-darker margin-0">
+                    I am a feedback open text example and ideally it's can display a bit of characters before becoming truncated in a message like this for example..
+                  </p>
+                </div>
+
+                <div class="timeline-item">
+                  <div class="flex-justify flex-align-center display-flex margin-bottom-05">
+                    <span class="font-sans-3xs text-base">Yesterday at 2:31PM ET</span>
+                    <span class="usa-tag bg-gold-20 text-gold-60v font-sans-3xs text-bold">😐 Neutral</span>
+                  </div>
+                  <div class="font-sans-2xs text-bold margin-bottom-05">Anonymous Submission</div>
+                  <p class="font-sans-3xs text-base-darker margin-0">
+                    I am a feedback open text example and ideally it's can display a bit of characters before becoming truncated in a message like this for example..
+                  </p>
+                </div>
+
+                <div class="timeline-item">
+                  <div class="flex-justify flex-align-center display-flex margin-bottom-05">
+                    <span class="font-sans-3xs text-base">Yesterday at 12:05PM ET</span>
+                    <span class="usa-tag bg-gold-20 text-gold-60v font-sans-3xs text-bold">😐 Neutral</span>
+                  </div>
+                  <div class="font-sans-2xs text-bold margin-bottom-05">Owens Valley Career Development Center</div>
+                  <p class="font-sans-3xs text-base-darker margin-0">
+                    An updated submission guide should be given to us. with step by step instructions
+                  </p>
+                </div>
+
+                <div class="timeline-item">
+                  <div class="flex-justify flex-align-center display-flex margin-bottom-05">
+                    <span class="font-sans-3xs text-base">Yesterday at 10:05AM ET</span>
+                    <span class="usa-tag bg-error-light text-error-dark font-sans-3xs text-bold">🙁 Very Unsatisfied</span>
+                  </div>
+                  <div class="font-sans-2xs text-bold margin-bottom-05">Owens Valley Career Development Center Ext...</div>
+                  <p class="font-sans-3xs text-base text-italic margin-0">
+                    User did not provide additional comments
+                  </p>
+                </div>
+
+              </div>
+
+              <div class="flex-justify flex-align-center display-flex margin-top-2">
+                <span class="font-sans-3xs text-italic text-base">and 1 more new submission</span>
+                <a href="#" class="usa-link font-sans-3xs text-bold">View all feedback</a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <section class="usa-card dashboard-card shadow-1 radius-md">
+        <div class="usa-card__container padding-205">
+          
+          <div class="flex-justify flex-align-center display-flex margin-bottom-2">
+            <h2 class="font-sans-md text-bold margin-0">🔒 8 User Permissions &amp; Requests</h2>
+            <div class="display-flex flex-align-center">
+              <span class="font-sans-3xs text-base-dark margin-right-1">View:</span>
+              <select class="usa-select usa-select--small display-inline-block width-auto margin-right-2" aria-label="Filter Requests">
+                <option value="all">All Requests</option>
+              </select>
+              <button class="usa-button usa-button--unstyled font-sans-3xs text-base-dark margin-right-1">Sort: Newest</button>
+              <button class="usa-button usa-button--unstyled text-base font-sans-xs">•••</button>
+            </div>
+          </div>
+
+          <div class="margin-bottom-1">
+            <span class="font-sans-xs text-bold">1 New Request</span>
+            <span class="font-sans-3xs text-base margin-left-1">1 change request</span>
+          </div>
+
+          <div class="usa-table-container--scrollable margin-bottom-3">
+            <table class="usa-table usa-table--borderless width-full font-sans-2xs">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 30px;"></th>
+                  <th scope="col">User</th>
+                  <th scope="col">Request</th>
+                  <th scope="col">Request Date</th>
+                  <th scope="col">STT</th>
+                  <th scope="col" class="text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-primary-lightest">
+                  <td class="text-center">
+                    <span class="unread-indicator"></span>
+                    <input type="radio" name="request-sel" aria-label="Select request">
+                  </td>
+                  <td>
+                    <div class="text-bold">Rita McDonald</div>
+                    <div class="font-sans-3xs text-base">rita.mcdonald@acf.hhs.gov</div>
+                  </td>
+                  <td><span class="text-bold">Change request to have FRA access</span></td>
+                  <td class="text-bold">Today at 2:37 PM</td>
+                  <td>California (6)</td>
+                  <td class="text-right">
+                    <button class="usa-button usa-button--accent-cool font-sans-3xs padding-y-05 padding-x-1">Approve</button>
+                    <button class="usa-button usa-button--outline usa-button--secondary font-sans-3xs padding-y-05 padding-x-1">Deny</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="flex-justify flex-align-center display-flex margin-bottom-1">
+            <div>
+              <span class="font-sans-xs text-bold">7 Pending Request</span>
+              <span class="font-sans-3xs text-base margin-left-1">3 access requests · 4 change requests</span>
+            </div>
+            <div class="avatar-stack">
+              <span class="avatar-circle avatar-teal">A</span>
+            </div>
+          </div>
+
+          <div class="usa-table-container--scrollable">
+            <table class="usa-table usa-table--borderless width-full font-sans-2xs">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 30px;"></th>
+                  <th scope="col">User</th>
+                  <th scope="col">Request</th>
+                  <th scope="col">Request Date</th>
+                  <th scope="col">STT</th>
+                  <th scope="col" class="text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td>
+                    <div class="text-bold">Johnathan Dough</div>
+                    <div class="font-sans-3xs text-base">j.dough@acf.hhs.gov</div>
+                  </td>
+                  <td>Data analyst with FRA</td>
+                  <td>Today at 10:13 AM</td>
+                  <td>California (6)</td>
+                  <td class="text-right">
+                    <button class="usa-button usa-button--accent-cool font-sans-3xs padding-y-05 padding-x-105">View Details</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>
+                    <div class="text-bold">Michael Stevenson</div>
+                    <div class="font-sans-3xs text-base">micahel.johna...@acf.hhhs.gov</div>
+                  </td>
+                  <td>Regional Staff</td>
+                  <td>Yesterday at 12:37 PM</td>
+                  <td>California (6)</td>
+                  <td class="text-right">
+                    <button class="usa-button usa-button--accent-cool font-sans-3xs padding-y-05 padding-x-105">View Details</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uswds/3.8.1/js/uswds.min.js"></script>
+</body>
+</html>
