@@ -204,6 +204,34 @@
   margin-right: 12px;
   flex-shrink: 0;
 }
+.success-card {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.success-icon {
+  width: 56px;
+  height: 56px;
+  background-color: #e7f4e8;
+  color: #1b5e20;
+  border-radius: 50%;
+  font-size: 2rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.success-card h2 {
+  margin: 0 0 8px;
+  color: #1b5e20;
+}
+
+.success-card p {
+  color: #555;
+  font-size: 1.05rem;
+}
   </style>
 </head>
 <body>
@@ -216,33 +244,40 @@
       <h3>Background</h3>
       <p>If you haven't already, please take a few minutes to familiarize yourself with the <a href="https://drive.google.com/file/d/1Y0QconJkCDNwSi_2QMKtvzgCAZPKTRmX/view?usp=sharing" target="_blank" rel="noopener">input that community members have shared in previous town halls</a>.</p>
       <p>The results of this survey will be used to guide artists in creating some logo and brand options customized to our district—which will then be put to a final community vote.</p>
-      <p><a href="transit-history.html">Read more about the area's transit history</a></p>
+      <!-- <p><a href="transit-history.html">Read more about the area's transit history</a></p>
       <p><a href="https://reitermb.github.io/10th-Street-Emerging-Cultural-District/diversity.html" target="_blank" rel="noopener">Read more about the area's diversity</a></p>
-      <p><a href="https://reitermb.github.io/10th-Street-Emerging-Cultural-District/emerson-theater.html">Read more about the Emerson Theater</a></p>
+      <p><a href="https://reitermb.github.io/10th-Street-Emerging-Cultural-District/emerson-theater.html">Read more about the Emerson Theater</a></p> -->
     </div>
+
+<!-- Thank-You / Success Screen -->
+<div id="successCard" class="success-card" style="display: none;">
+  <div class="success-icon">✓</div>
+  <h2>Thank You!</h2>
+  <p>Your responses have been successfully recorded and sent to the district team.</p>
+</div>
 
     <form id="culturalSurvey">
       <!-- Question 1: Themes Ranking -->
       <div class="question-block">
         <div class="question-title">1. Rank the following themes for our cultural district from favorite to least favorite<span class="req-star">*</span></div>
-        <div class="question-desc">Hold and drag any item up or down to place them in order.</div>
+        <div class="question-desc">Hold and drag any item up or down to place them in your preferred order.</div>
         <ul id="rankThemes" class="sortable-list">
-          <li class="sortable-item" data-value="Transit History"><span class="sortable-handle">☰</span> Transit History</li>
+          <li class="sortable-item" data-value="Transit History"><span class="sortable-handle">☰</span> Transit History —  <a href="transit-history.html" style="padding-left: 8px;;"> Read more about this theme</a></li>
           <li class="sortable-item" data-value="Diverse & Multicultural"><span class="sortable-handle">☰</span> Diverse & Multicultural</li>
           <li class="sortable-item" data-value="Hardworking & Gritty"><span class="sortable-handle">☰</span> Hardworking & Gritty</li>
-          <li class="sortable-item" data-value="Emerson Theater"><span class="sortable-handle">☰</span> Emerson Theater</li>
+          <li class="sortable-item" data-value="Emerson Theater"><span class="sortable-handle">☰</span> Emerson Theater —  <a href="emerson-theater.html" style="padding-left: 8px;;"> Read more about this theme</a></li>
         </ul>
       </div>
 
       <!-- Question 2: Names Ranking -->
       <div class="question-block">
         <div class="question-title">2. Rank possible names for our district from your favorite to least favorite<span class="req-star">*</span></div>
-        <div class="question-desc">Hold and drag any item up or down to place them in order.</div>
+        <div class="question-desc">Hold and drag any item up or down to place them in your preferred order.</div>
         <ul id="rankNames" class="sortable-list">
-          <li class="sortable-item" data-value="Eastland"><span class="sortable-handle">☰</span> Eastland</li>
-          <li class="sortable-item" data-value="Linwood"><span class="sortable-handle">☰</span> Linwood</li>
-          <li class="sortable-item" data-value="The Dime"><span class="sortable-handle">☰</span> The Dime</li>
-          <li class="sortable-item" data-value="Emerson"><span class="sortable-handle">☰</span> Emerson</li>
+          <li class="sortable-item" data-value="Eastland"><span class="sortable-handle">☰</span> <strong>Eastland </strong>&nbsp;—&nbsp;<span style="background-color: #255228; border-radius: 20px; color: white; padding: 7px; margin-right: 8px;">Historic</span>Tied to the original name of the Emerson Theater when it opened in 1927</li>
+          <li class="sortable-item" data-value="Linwood"><span class="sortable-handle">☰</span> <strong>Linwood</strong>&nbsp;—&nbsp;<span style="background-color: #11356d; border-radius: 20px; color: white; padding: 7px; margin-right: 8px;">Landmark</span>Prominent north-south thoroughfare, neighborhood hub, and retail center</li>
+          <li class="sortable-item" data-value="The Dime"><span class="sortable-handle">☰</span> <strong>The Dime</strong>&nbsp;—&nbsp;<span style="background-color: #255228; border-radius: 20px; color: white; padding: 7px; margin-right: 8px;">Historic</span>Tied to the historic local street moniker for our area of East 10th</li>
+          <li class="sortable-item" data-value="Emerson"><span class="sortable-handle">☰</span> <strong>Emerson</strong>&nbsp;—&nbsp;<span style="background-color: #11356d; border-radius: 20px; color: white; padding: 7px; margin-right: 8px;">Landmark</span>Prominent north-south thoroughfare also potentially evoking the Emerson Theater</li>
         </ul>
       </div>
 
@@ -285,10 +320,12 @@
         <input type="email" id="question5" name="question5" class="text-input" autocomplete="email" />
       </div>
 
-      <button type="submit" id="submitBtn" class="submit-btn">Submit Feedback</button>
+      <button type="submit" id="submitBtn" class="submit-btn">Submit Survey</button>
       <div id="statusMsg" class="status-msg"></div>
     </form>
   </div>
+
+
 
   <script>
     // 1. Utility: Shuffle list items randomly on load (matches "choicesOrder": "random")
@@ -372,28 +409,33 @@ const rankNamesSortable = Sortable.create(document.getElementById('rankNames'), 
       }
 
       // Send to Apps Script endpoint
-      fetch("https://script.google.com/macros/s/AKfycbzr-nhwnrPAhu2uj0PL_vNT9ZlewObzZdIXe2cC6J1IoJxJTCdb-PloXLK-NVhYvDCO3w/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "text/plain"
-        },
-        body: JSON.stringify(payload)
-      })
-      .then(() => {
-        form.style.display = 'none';
-        statusMsg.className = 'status-msg status-success';
-        statusMsg.style.display = 'block';
-        statusMsg.innerHTML = '<h3>Thank you!</h3><p>Your feedback has been successfully submitted.</p>';
-      })
-      .catch((err) => {
-        console.error("Submission error:", err);
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit Feedback';
-        statusMsg.className = 'status-msg status-error';
-        statusMsg.style.display = 'block';
-        statusMsg.textContent = 'There was an error saving your response. Please try again.';
-      });
+fetch("https://script.google.com/macros/s/AKfycbzr-nhwnrPAhu2uj0PL_vNT9ZlewObzZdIXe2cC6J1IoJxJTCdb-PloXLK-NVhYvDCO3w/exec", {
+  method: "POST",
+  mode: "no-cors",
+  headers: {
+    "Content-Type": "text/plain"
+  },
+  body: JSON.stringify(payload)
+})
+.then(() => {
+  // Hide the form and context background
+  form.style.display = 'none';
+  const backgroundBlock = document.querySelector('.question-block');
+  if (backgroundBlock) backgroundBlock.style.display = 'none';
+
+  // Reveal the success card
+  const successCard = document.getElementById('successCard');
+  successCard.style.display = 'block';
+
+  // Scroll to top smoothly so the user immediately sees the confirmation
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+})
+.catch((err) => {
+  console.error("Submission error:", err);
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Submit Feedback';
+  alert('There was a problem submitting your response. Please check your connection and try again.');
+});
     });
   </script>
 </body>
