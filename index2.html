@@ -232,6 +232,82 @@
   color: #555;
   font-size: 1.05rem;
 }
+/* Community Thanks & CTA Buttons */
+.community-cta-card {
+  background: #f0f7fb;
+  border: 1px solid #c2e0f4;
+  border-radius: 8px;
+  padding: 28px 24px;
+  text-align: center;
+  margin-top: 32px;
+}
+.community-cta-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  color: #1a4480;
+}
+.community-cta-card p {
+  font-size: 1rem;
+  color: #333;
+  margin: 0 0 20px;
+}
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+.cta-btn:active {
+  transform: scale(0.98);
+}
+
+/* Primary Website Button */
+.cta-btn--primary {
+  background-color: #005ea2;
+  color: #ffffff;
+  border: 1px solid #005ea2;
+}
+.cta-btn--primary:hover {
+  background-color: #1a4480;
+  border-color: #1a4480;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Secondary Instagram Button */
+.cta-btn--secondary {
+  background-color: #ffffff;
+  color: #005ea2;
+  border: 1px solid #005ea2;
+}
+.cta-btn--secondary:hover {
+  background-color: #e8f0fe;
+  color: #1a4480;
+  text-decoration: none;
+}
+
+/* Full width buttons on small phone screens */
+@media (max-width: 540px) {
+  .cta-actions {
+    flex-direction: column;
+  }
+  .cta-btn {
+    width: 100%;
+  }
+}
   </style>
 </head>
 <body>
@@ -320,8 +396,19 @@
         <input type="email" id="question5" name="question5" class="text-input" autocomplete="email" />
       </div>
 
-      <button type="submit" id="submitBtn" class="submit-btn">Submit Survey</button>
+      <!-- <button type="submit" id="submitBtn" class="submit-btn">Submit Survey</button> -->
       <div id="statusMsg" class="status-msg"></div>
+      <div class="community-cta-card">
+        <h2>Survey is now closed to new responses</h2>
+        <p>Thank you to everyone who took the time to share your thoughts, rank themes, and shape the direction of our cultural district!</p>
+        <div class="cta-actions">
+    <a href="https://www.littleflowerindy.org/10th-street-cultural-district" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn--primary">
+      Visit Project Website →
+    </a>
+    <a href="https://www.instagram.com/e10.indy/" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn--secondary">
+      Follow @e10.indy on Instagram
+    </a>
+  </div>
     </form>
   </div>
 
