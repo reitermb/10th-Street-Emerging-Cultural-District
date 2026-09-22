@@ -308,12 +308,15 @@
     width: 100%;
   }
 }
+html {
+  scroll-behavior: smooth;
+}
   </style>
 </head>
 <body>
 
   <div class="survey-container">
-    <h1>Cultural District Survey</h1>
+    <h1>Cultural District Survey (<a href="#closed">Now Closed</a>)</h1>
 
     <!-- Background & Context -->
     <div class="question-block">
@@ -397,9 +400,10 @@
       </div>
 
       <!-- <button type="submit" id="submitBtn" class="submit-btn">Submit Survey</button> -->
-      <div id="statusMsg" class="status-msg"></div>
+
+      <div id="status-msg" class="status-msg"></div>
       <div class="community-cta-card">
-        <h2>Survey is now closed to new responses</h2>
+        <h2 id="closed">Survey is now closed to new responses</h2>
         <p>Thank you to everyone who took the time to share your thoughts, rank themes, and shape the direction of our cultural district!</p>
         <div class="cta-actions">
     <a href="https://www.littleflowerindy.org/10th-street-cultural-district" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn--primary">
