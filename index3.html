@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cultural District Survey</title>
+
+  <!-- SortableJS CDN (Lightweight ~10KB drag engine) -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      color: #222;
+      background-color: #fcfcfc;
+      padding: 16px;
+      margin: 0;
+    }
+    .survey-container {
+      max-width: 680px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 24px;
+      border: 1px solid #e1e4e8;
+      border-radius: 8px;
+    }
+    h1 {
+      font-size: 1.6rem;
+      margin-top: 0;
+    }
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+    p {
+      margin: 0 0 12px;
+    }
+    a {
+      color: #005ea2;
+      text-decoration: underline;
+    }
+    .question-block {
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    .question-title {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+    .question-desc {
+      font-size: 0.85rem;
+      color: #555;
+      margin-bottom: 12px;
+    }
+    .req-star {
+      color: #d9381e;
+      margin-left: 2px;
+    }
+
+    /* Sortable List Styling */
+    .sortable-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sortable-item {
+      display: flex;
+      align-items: center;
+      background: #f8f9fa;
+      border: 1px solid #c9d1d9;
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin-bottom: 8px;
+      font-size: 1rem;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: none; /* Immediately starts drag on touch with zero delay */
+      transition: background-color 0.15s, border-color 0.15s;
+    }
+    .sortable-item:active {
+      cursor: grabbing;
+    }
+    .sortable-handle {
+      margin-right: 12px;
+      color: #888;
+      font-size: 1.1rem;
+      display: inline-flex;
+    }
+    .sortable-chosen {
+      background-color: #e8f0fe !important;
+      border-color: #005ea2 !important;
+    }
+    .sortable-ghost {
+      opacity: 0.35;
+      background-color: #d0d7de !important;
+    }
+
+    /* Radio Inputs */
+    .radio-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .radio-option input {
+      margin-right: 10px;
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Text Input */
+    .text-input {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 6px;
+    }
+    .text-input:focus {
+      outline: 2px solid #005ea2;
+      border-color: transparent;
+    }
+
+    /* Images */
+    .survey-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      border: 1px solid #e1e4e8;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      background-color: #005ea2;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      background-color: #1a4480;
+    }
+    .submit-btn:disabled {
+      background-color: #8c939c;
+      cursor: not-allowed;
+    }
+
+    /* Status Notifications */
+    .status-msg {
+      display: none;
+      padding: 14px;
+      border-radius: 4px;
+      margin-top: 16px;
+      font-weight: 500;
+    }
+    .status-success {
+      background: #e7f4e8;
+      color: #1b5e20;
+      border: 1px solid #c8e6c9;
+    }
+    .status-error {
+      background: #fde8e8;
+      color: #9c1c1c;
+      border: 1px solid #f8b4b4;
+    }
+    /* Automatically number items once the list has been ranked */
+.sortable-list.has-ranked {
+  counter-reset: rank-counter;
+}
+
+.sortable-list.has-ranked .sortable-item {
+  counter-increment: rank-counter;
+}
+
+/* Rank number badge that appears before each item */
+.sortable-list.has-ranked .sortable-item::before {
+  content: counter(rank-counter);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2px;
+  width: 24px;
+  height: 24px;
+  background-color: #005ea2;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 800;
+  border-radius: 50%;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+.success-card {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.success-icon {
+  width: 56px;
+  height: 56px;
+  background-color: #e7f4e8;
+  color: #1b5e20;
+  border-radius: 50%;
+  font-size: 2rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.success-card h2 {
+  margin: 0 0 8px;
+  color: #1b5e20;
+}
+
+.success-card p {
+  color: #555;
+  font-size: 1.05rem;
+}
+/* Community Thanks & CTA Buttons */
+.community-cta-card {
+  background: #f0f7fb;
+  border: 1px solid #c2e0f4;
+  border-radius: 8px;
+  padding: 28px 24px;
+  text-align: center;
+  margin-top: 32px;
+}
+.community-cta-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  color: #1a4480;
+}
+.community-cta-card p {
+  font-size: 1rem;
+  color: #333;
+  margin: 0 0 20px;
+}
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+.cta-btn:active {
+  transform: scale(0.98);
+}
+
+/* Primary Website Button */
+.cta-btn--primary {
+  background-color: #005ea2;
+  color: #ffffff;
+  border: 1px solid #005ea2;
+}
+.cta-btn--primary:hover {
+  background-color: #1a4480;
+  border-color: #1a4480;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Secondary Instagram Button */
+.cta-btn--secondary {
+  background-color: #ffffff;
+  color: #005ea2;
+  border: 1px solid #005ea2;
+}
+.cta-btn--secondary:hover {
+  background-color: #e8f0fe;
+  color: #1a4480;
+  text-decoration: none;
+}
+
+/* Full width buttons on small phone screens */
+@media (max-width: 540px) {
+  .cta-actions {
+    flex-direction: column;
+  }
+  .cta-btn {
+    width: 100%;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+  </style>
+</head>
+<body>
+
+  <div class="survey-container">
+    <h1>Cultural District Survey (<a href="#closed">Now Closed</a>)</h1>
+
+    <!-- Background & Context -->
+    <div class="question-block">
+      <h3>Background</h3>
+      <p>If you haven't already, please take a few minutes to familiarize yourself with the <a href="https://drive.google.com/file/d/1Y0QconJkCDNwSi_2QMKtvzgCAZPKTRmX/view?usp=sharing" target="_blank" rel="noopener">input that community members have shared in previous town halls</a>.</p>
+      <p>The results of this survey will be used to guide artists in creating some logo and brand options customized to our district—which will then be put to a final community vote.</p>
+      <!-- <p><a href="transit-history.html">Read more about the area's transit history</a></p>
+      <p><a href="https://reitermb.github.io/10th-Street-Emerging-Cultural-District/diversity.html" target="_blank" rel="noopener">Read more about the area's diversity</a></p>
+      <p><a href="https://reitermb.github.io/10th-Street-Emerging-Cultural-District/emerson-theater.html">Read more about the Emerson Theater</a></p> -->
+    </div>
+
+<!-- Thank-You / Success Screen -->
+<div id="successCard" class="success-card" style="display: none;">
+  <div class="success-icon">✓</div>
+  <h2>Thank You!</h2>
+  <p>Your responses have been successfully recorded and sent to the district team.</p>
+</div>
+
+    <form id="culturalSurvey">
+      <!-- Question 1: Themes Ranking -->
+      <div class="question-block">
+        <div class="question-title">1. Rank the following themes for our cultural district from favorite to least favorite<span class="req-star">*</span></div>
+        <div class="question-desc">Hold and drag any item up or down to place them in your preferred order.</div>
+        <ul id="rankThemes" class="sortable-list">
+          <li class="sortable-item" data-value="Transit History"><span class="sortable-handle">☰</span> Transit History —  <a href="transit-history.html" style="padding-left: 8px;;"> Read more about this theme</a></li>
+          <li class="sortable-item" data-value="Diverse & Multicultural"><span class="sortable-handle">☰</span> Diverse & Multicultural</li>
+          <li class="sortable-item" data-value="Hardworking & Down-to-earth"><span class="sortable-handle">☰</span> Hardworking & Down-to-earth</li>
+          <li class="sortable-item" data-value="Emerson Theater"><span class="sortable-handle">☰</span> Emerson Theater —  <a href="emerson-theater.html" style="padding-left: 8px;;"> Read more about this theme</a></li>
+        </ul>
+      </div>
+
+      <!-- Question 2: Names Ranking -->
+      <div class="question-block">
+        <div class="question-title">2. Rank possible names for our district from your favorite to least favorite<span class="req-star">*</span></div>
+        <div class="question-desc">Hold and drag any item up or down to place them in your preferred order.</div>
+        <ul id="rankNames" class="sortable-list">
+          <li class="sortable-item" data-value="Eastland"><span class="sortable-handle">☰</span> <strong>Eastland </strong>&nbsp;—&nbsp;<span style="background-color: #255228; border-radius: 20px; color: white; padding: 7px; margin-right: 8px;">Historic</span>Tied to the original name of the Emerson Theater when it opened in 1927</li>
+          <li class="sortable-item" data-value="Linwood"><span class="sortable-handle">☰</span> <strong>Linwood</strong>&nbsp;—&nbsp;<span style="background-color: #11356d; border-radius: 20px; color: white; padding: 7px; margin-right: 8px;">Landmark</span>Prominent north-south thoroughfare, neighborhood hub, and retail center</li>
+          <li class="sortable-item" data-value="The Dime"><span class="sortable-handle">☰</span> <strong>The Dime</strong>&nbsp;—&nbsp;<span style="background-color: #255228; border-radius: 20px; color: white; padding: 7px; margin-right: 8px;">Historic</span>Tied to the historic local street moniker for our area of East 10th</li>
+          <li class="sortable-item" data-value="Emerson"><span class="sortable-handle">☰</span> <strong>Emerson</strong>&nbsp;—&nbsp;<span style="background-color: #11356d; border-radius: 20px; color: white; padding: 7px; margin-right: 8px;">Landmark</span>Prominent north-south thoroughfare also potentially evoking the Emerson Theater</li>
+        </ul>
+      </div>
+
+      <!-- Narrative & Images -->
+      <div class="question-block">
+        <h3>Style examples for art in the right-of-way:</h3>
+        <p>These will be painted via stencil alongside installation of the tactical urbanism components of our project aimed at both reinforcing the brand of the cultural district and calming traffic to improve safety and increase productive sharing of streets between vehicles, pedestrians, and bikes.</p>
+        <img class="survey-img" src="https://i.imgur.com/2qaZ1Ou.png" alt="Floral Examples" />
+        <img class="survey-img" src="https://i.imgur.com/yTy7I06.png" alt="Geometric Examples" />
+      </div>
+
+      <!-- Question 3: Art Style Preference -->
+      <div class="question-block">
+        <div class="question-title">3. Which style of right-of-way art would you prefer to see?<span class="req-star">*</span></div>
+        <label class="radio-option">
+          <input type="radio" name="question3" value="Floral" required /> Floral
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="question3" value="Geometric" /> Geometric
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="question3" value="A mix of both" /> A mix of both
+        </label>
+      </div>
+
+      <!-- Question 4: Updates Opt-in -->
+      <div class="question-block">
+        <div class="question-title">4. Would you like to receive email updates about the cultural district?<span class="req-star">*</span></div>
+        <label class="radio-option">
+          <input type="radio" name="question4" value="Yes, sign me up!" required /> Yes, sign me up!
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="question4" value="No" /> No
+        </label>
+      </div>
+
+      <!-- Question 5: Conditional Email -->
+      <div class="question-block" id="emailBlock" style="display: none;">
+        <label for="question5" class="question-title">Email Address<span class="req-star">*</span></label>
+        <input type="email" id="question5" name="question5" class="text-input" autocomplete="email" />
+      </div>
+
+      <button type="submit" id="submitBtn" class="submit-btn">Submit Survey</button>
+
+      <div id="status-msg" class="status-msg"></div>
+      <div class="community-cta-card">
+        <h2 id="closed">Survey is now closed to new responses</h2>
+        <p>Thank you to everyone who took the time to share your thoughts, rank themes, and shape the direction of our cultural district!</p>
+        <div class="cta-actions">
+    <a href="https://www.littleflowerindy.org/10th-street-cultural-district" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn--primary">
+      Visit Project Website →
+    </a>
+    <a href="https://www.instagram.com/e10.indy/" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn--secondary">
+      Follow @e10.indy on Instagram
+    </a>
+  </div>
+    </form>
+  </div>
+
+
+
+  <script>
+    // 1. Utility: Shuffle list items randomly on load (matches "choicesOrder": "random")
+    function shuffleList(listId) {
+      const list = document.getElementById(listId);
+      for (let i = list.children.length; i >= 0; i--) {
+        list.appendChild(list.children[Math.random() * i | 0]);
+      }
+    }
+    shuffleList('rankThemes');
+    shuffleList('rankNames');
+
+    // 2. Initialize SortableJS instances (instant touch response, no delay)
+// Add onEnd callback to sortableConfig
+const sortableConfig = {
+  animation: 150,
+  delay: 0,
+  delayOnTouchOnly: false,
+  touchStartThreshold: 2,
+  ghostClass: 'sortable-ghost',
+  chosenClass: 'sortable-chosen',
+  onEnd: function (evt) {
+    // Adds class to show rank numbers once user drags an item
+    evt.to.classList.add('has-ranked');
+  }
+};
+
+const rankThemesSortable = Sortable.create(document.getElementById('rankThemes'), sortableConfig);
+const rankNamesSortable = Sortable.create(document.getElementById('rankNames'), sortableConfig);
+
+    // 3. Conditional Visibility: Question 5 (Email)
+    const emailBlock = document.getElementById('emailBlock');
+    const emailInput = document.getElementById('question5');
+    const radioQ4 = document.getElementsByName('question4');
+
+    radioQ4.forEach(radio => {
+      radio.addEventListener('change', () => {
+        if (radio.checked && radio.value === 'Yes, sign me up!') {
+          emailBlock.style.display = 'block';
+          emailInput.required = true;
+        } else {
+          emailBlock.style.display = 'none';
+          emailInput.required = false;
+          emailInput.value = '';
+        }
+      });
+    });
+
+    // 4. Submission Handler
+    const form = document.getElementById('culturalSurvey');
+    const submitBtn = document.getElementById('submitBtn');
+    const statusMsg = document.getElementById('statusMsg');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      // Harvest ordered values from the DOM
+      const q1Values = Array.from(document.getElementById('rankThemes').children)
+        .map(el => el.getAttribute('data-value'));
+      
+      const q2Values = Array.from(document.getElementById('rankNames').children)
+        .map(el => el.getAttribute('data-value'));
+
+      const q3Val = document.querySelector('input[name="question3"]:checked')?.value || "";
+      const q4Val = document.querySelector('input[name="question4"]:checked')?.value || "";
+      const q5Val = emailInput.value.trim();
+
+      // Mirror the exact JSON payload format your Google Apps Script expects
+      const payload = {
+        question1: q1Values,
+        question2: q2Values,
+        question3: q3Val,
+        question4: q4Val
+      };
+
+      if (q4Val === 'Yes, sign me up!' && q5Val) {
+        payload.question5 = q5Val;
+      }
+
+      // Send to Apps Script endpoint
+fetch("https://script.google.com/macros/s/AKfycbzr-nhwnrPAhu2uj0PL_vNT9ZlewObzZdIXe2cC6J1IoJxJTCdb-PloXLK-NVhYvDCO3w/exec", {
+  method: "POST",
+  mode: "no-cors",
+  headers: {
+    "Content-Type": "text/plain"
+  },
+  body: JSON.stringify(payload)
+})
+.then(() => {
+  // Hide the form and context background
+  form.style.display = 'none';
+  const backgroundBlock = document.querySelector('.question-block');
+  if (backgroundBlock) backgroundBlock.style.display = 'none';
+
+  // Reveal the success card
+  const successCard = document.getElementById('successCard');
+  successCard.style.display = 'block';
+
+  // Scroll to top smoothly so the user immediately sees the confirmation
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+})
+.catch((err) => {
+  console.error("Submission error:", err);
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Submit Feedback';
+  alert('There was a problem submitting your response. Please check your connection and try again.');
+});
+    });
+  </script>
+</body>
+</html>
